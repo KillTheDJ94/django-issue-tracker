@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="container">
+    <div>
+        <div class= "col-sm-10 col-md-9">
+            <h3 class="d-flex justify-content-center">{{ bugs.title }}</h3>
+            <p>{{ bugs.bugs_details}}</p>
+            <p><span class="boldtext">Created on: </span>{{ bugs.published_date }}</p>
+            <p><span class="boldtext">Type of bugs: </span>{{ bugs.tag }}</p>
+            <p><span class="boldtext">Priority: </span>{{ bugs.priority }}</p>
+            <p><span class="boldtext">Created By: </span>{{ bugs.users }}</p>
+            <div class="d-flex flex-wrap">
+            {% if bugs.users == user %}
+            <a href= "{% url 'edit_bug' bugs.id %}" class="btn btn-warning">Edit Bug</a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
