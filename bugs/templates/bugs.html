@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block page_title %} Current Issues {% endblock %}
+
+{% block page_heading %} Current Issues {% endblock %}
+
+{% block content %}
+<form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>    
+    <table class="table table-hover table-dark">
+    <thead>
+            <tr>
+              <th>Bug ID</th>
+              <th>Bug Date</th>
+              <th>Bug Title</th>
+              <th>Bug Type</th>
+              <th>Priority</th>
+              <th>Development Status</th>
+            </tr>
+        </thead>
+    {% for bug in bugs %}
+    
+       
+        <tbody>
+            <tr>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.id}}</a></td>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.published_date}}</a></td>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.title}}</a></td>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.tag}}</a></td>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.priority}}</a></td>
+                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.development_status}}</a></td>
+            </tr>
+        </tbody>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
