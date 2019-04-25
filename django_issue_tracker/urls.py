@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from accounts import urls as accounts_urls
-from account.views import index
+from accounts.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

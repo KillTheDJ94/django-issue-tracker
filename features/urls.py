@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^features_to_do/$', feature_request_to_do, name='feature_request_to_do'),
     url(r'^features_investigated/$', feature_request_investigated, name='feature_request_investigated'),
     url(r'^features_in_development/$', feature_request_in_development, name='feature_request_in_development'),
-    url(r'^features_in_testing/$', feature_request_in_testing, name='feature_request_to_in_testing'),
+    url(r'^features_in_testing/$', feature_request_in_testing, name='feature_request_in_testing'),
     url(r'^new_feature_request/$', create_or_edit_feature, name="new_feature"),
     ]
