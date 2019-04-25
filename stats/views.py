@@ -2,6 +2,9 @@ from django.shortcuts import render, HttpResponse
 import pygal
 from bugs.models import Bugs
 from features.models import Features
+from django.utils import timezone
+import datetime
+from datetime import timedelta
 
 def stats(request):
     a_chart = pygal.Pie()
@@ -32,7 +35,55 @@ def stats(request):
     d_chart.title = "Total Number Of Bug Reports And Feature Requests"
     d_chart.add("Bug Reports", Bugs.objects.filter(tag="Bug").count())
     d_chart.add("Feature Requests", Features.objects.filter(tag="Feature Request").count())
-    
     chart4 = d_chart.render_data_uri()
     
-    return render(request, 'development_status_stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4})
+    e_chart = pygal.HorizontalBar()
+    e_chart.title = "Bug reports generated weekly"
+    e_chart.add("Today", Bugs.objects.filter(tag="Bug", published_date=timezone.now()).count())
+    e_chart.add("Yesterday", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=1)).count())
+    e_chart.add("2 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=2)).count())
+    e_chart.add("3 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=3)).count())
+    e_chart.add("4 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=4)).count())
+    e_chart.add("5 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=5)).count())
+    e_chart.add("6 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=6)).count())
+    e_chart.add("7 days", Bugs.objects.filter(tag="Bug",published_date=timezone.now().date() - timedelta(days=7)).count())
+    chart5 = e_chart.render_data_uri()
+    
+    f_chart = pygal.HorizontalBar()
+    f_chart.title = "Feature Requests generated weekly"
+    f_chart.add("Today", Features.objects.filter(tag="Feature Request", published_date=timezone.now()).count())
+    f_chart.add("Yesterday", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=1)).count())
+    f_chart.add("2 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=2)).count())
+    f_chart.add("3 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=3)).count())
+    f_chart.add("4 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=4)).count())
+    f_chart.add("5 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=5)).count())
+    f_chart.add("6 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=6)).count())
+    f_chart.add("7 days", Features.objects.filter(tag="Feature Request",published_date=timezone.now().date() - timedelta(days=7)).count())
+    chart6 = f_chart.render_data_uri()
+    
+    g_chart = pygal.Pie()
+    g_chart.title = "Bugs Investigated weekly"
+    g_chart.add("Today", Bugs.objects.filter(tag="Bug", development_status="Currently Being Investigated", published_date=timezone.now()).count())
+    g_chart.add("Yesterday", Bugs.objects.filter(tag="Bug", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=1)).count())
+    g_chart.add("2 days", Bugs.objects.filter(tag="Bug", development_status="Currently Being Investigated",published_date=timezone.now().date() - timedelta(days=2)).count())
+    g_chart.add("3 days", Bugs.objects.filter(tag="Bug",development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=3)).count())
+    g_chart.add("4 days", Bugs.objects.filter(tag="Bug",development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=4)).count())
+    g_chart.add("5 days", Bugs.objects.filter(tag="Bug",development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=5)).count())
+    g_chart.add("6 days", Bugs.objects.filter(tag="Bug",development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=6)).count())
+    g_chart.add("7 days", Bugs.objects.filter(tag="Bug",development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=7)).count())
+    chart7 = g_chart.render_data_uri()
+    
+    h_chart = pygal.Pie()
+    h_chart.title = "Feature Requests Investigated weekly"
+    h_chart.add("Today", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now()).count())
+    h_chart.add("Yesterday", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=1)).count())
+    h_chart.add("2 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=2)).count())
+    h_chart.add("3 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=3)).count())
+    h_chart.add("4 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=4)).count())
+    h_chart.add("5 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=5)).count())
+    h_chart.add("6 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=6)).count())
+    h_chart.add("7 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=7)).count())
+    chart8 = h_chart.render_data_uri()
+    
+    
+    return render(request, 'stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4, 'chart5': chart5, 'chart6': chart6, 'chart7': chart7, 'chart8': chart8})
