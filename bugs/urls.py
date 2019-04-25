@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from comments.views import new_bug_comment
-from .views import bugs, bug_detail, create_or_edit_bug, bug_like, bug_dislike, bug_status_to_do, bug_status_investigated, bug_status_in_development, bug_status_in_testing
+from .views import bugs, bug_detail, create_or_edit_bug, bug_like, bug_dislike, bug_status_to_do, bug_status_investigated, bug_status_in_development, bug_status_in_testing, delete_bug
 
 urlpatterns = [
     url(r'^bugs/$', bugs, name='bugs'),

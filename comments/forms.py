@@ -1,6 +1,6 @@
 from django import forms
 from comments.models import Comments
-from issues.models import Issues
+from bugs.models import Bugs
 from django.contrib.auth.models import User
 
 class NewCommentForm(forms.ModelForm):

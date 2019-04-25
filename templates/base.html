@@ -18,12 +18,12 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{% url 'bugs'%}">All Bugs</a>
                             {% if user.is_authenticated%}
-                            <a class="dropdown-item" href="{% url 'new_issue' %}">New Bug</a>
+                            <a class="dropdown-item" href="{% url 'new_bug' %}">New Bug</a>
                             {% endif %}
-                            <a class="dropdown-item" href="{% url 'issue_status_to_do'%}">To Do</a>
-                            <a class="dropdown-item" href="{% url 'issue_status_investigated'%}">Being Investigated</a>
-                            <a class="dropdown-item" href="{% url 'issue_status_in_development' %}">In Development</a>
-                            <a class="dropdown-item" href="{% url 'issue_status_in_testing' %}">In Testing</a>
+                            <a class="dropdown-item" href="{% url 'bug_status_to_do'%}">To Do</a>
+                            <a class="dropdown-item" href="{% url 'bug_status_investigated'%}">Being Investigated</a>
+                            <a class="dropdown-item" href="{% url 'bug_status_in_development' %}">In Development</a>
+                            <a class="dropdown-item" href="{% url 'bug_status_in_testing' %}">In Testing</a>
                         </div>   
                     </li>
                     <li class="nav-item dropdown">
