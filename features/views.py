@@ -5,6 +5,8 @@ from .forms import FeaturePostForm
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from comments.models import Comments
+from comments.forms import NewCommentForm
 
 def features(request):
     features = Features.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -36,7 +38,9 @@ def feature_detail(request, pk):
     """
     feature = get_object_or_404(Features, pk=pk)
     feature.save()
-    return render(request, 'featuredetail.html', {'feature': feature})
+    comments = Comments.objects.filter(feature = feature).order_by('-created_date')
+    form = NewCommentForm(None)
+    return render(request, 'featuredetail.html', {'feature': feature, 'comments': comments, 'form': form})
     
 def create_or_edit_feature(request, pk=None):
     """
@@ -60,14 +64,18 @@ def feature_like(request, pk):
     feature.likes += 1
     feature.save()
     messages.success(request, "Thank you for liking this feature request.")
-    return render(request, 'feature_detail.html', {'feature': feature})
+    comments = Comments.objects.filter(feature = feature).order_by('-created_date')
+    form = NewCommentForm(None)
+    return render(request, 'feature_detail.html', {'feature': feature, 'comments': comments, 'form': form})
     
 def feature_dislike(request, pk):
     feature = Features.objects.get(pk=pk)
     feature.dislikes += 1
     feature.save()
     messages.success(request, "Thank you for reporting that you do not have this feature")
-    return render(request, 'featuredetail.html', {'feature': feature})
+    comments = Comments.objects.filter(feature = feature).order_by('-created_date')
+    form = NewCommentForm(None)
+    return render(request, 'featuredetail.html', {'feature': feature, 'comments': comments, 'form': form})
     
 def feature_request_to_do(request):
     features = Features.objects.filter(development_status= 'To Do', tag='Feature Request')
