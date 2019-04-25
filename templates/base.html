@@ -13,6 +13,32 @@
             <ul class= "nav navbar-nav">
                 <div class="navbar  navbar-fixed-top ">
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'bugs' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bugs</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'bugs'%}">All Bugs</a>
+                            {% if user.is_authenticated%}
+                            <a class="dropdown-item" href="{% url 'new_issue' %}">New Bug</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="{% url 'issue_status_to_do'%}">To Do</a>
+                            <a class="dropdown-item" href="{% url 'issue_status_investigated'%}">Being Investigated</a>
+                            <a class="dropdown-item" href="{% url 'issue_status_in_development' %}">In Development</a>
+                            <a class="dropdown-item" href="{% url 'issue_status_in_testing' %}">In Testing</a>
+                        </div>   
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'features' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Feature Requests</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'features' %}">All Features</a>
+                            {% if user.is_authenticated%}
+                            <a class="dropdown-item" href="{% url 'new_feature' %}">New Feature Request</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="{% url 'feature_request_to_do'%}">To Do</a>
+                            <a class="dropdown-item" href="{% url 'feature_request_investigated'%}">Being Investigated</a>
+                            <a class="dropdown-item" href="{% url 'feature_request_in_development' %}">In Development</a>
+                            <a class="dropdown-item" href="{% url 'feature_request_to_in_testing' %}">In Testing</a>
+                        </div>   
+                    </li>
                     {% if user.is_authenticated%}
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
@@ -22,6 +48,14 @@
                 </div>
             </ul>
         </nav>
+        {% if messages %}
+        <div class="alert alert-info alert-dismissable">
+            {% for messages in messages %}
+            {{ messages }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% block content %}
        
         {% endblock %}

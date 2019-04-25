@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block page_title %} Current Issues {% endblock %}
+{% block page_title %} Current Features {% endblock %}
 
-{% block page_heading %} Current Issues {% endblock %}
+{% block page_heading %} Current Features {% endblock %}
 
 {% block content %}
 <form class="form-inline my-2 my-lg-0">
@@ -40,7 +40,7 @@
     
     </table>
     {% if user.is_authenticated%}
-    <a id="issue-button" class="btn btn-success" href="{% url 'new_feature' %}">New Feature Request</a>
+    <a id="Feature-button" class="btn btn-success" href="{% url 'new_feature' %}">New Feature Request</a>
     {% else %}
     <h5 class="bug-form">Please <a href="{% url 'login' %}">Login</a> so that you can add a new bug report</h5>
     {% endif %}
