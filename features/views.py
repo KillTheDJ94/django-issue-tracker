@@ -163,3 +163,11 @@ def feature_request_in_testing(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         features = paginator.page(paginator.num_pages)
     return render(request, "feature_request_in_testing.html", {'features': features})
+    
+def delete_feature(request, pk):
+    """
+    Once an feature has been resolved it will be remove
+    """
+    feature = Features.objects.get(pk=pk)
+    feature.delete()
+    return render(request, redirect('features.html'), {'feature': feature})

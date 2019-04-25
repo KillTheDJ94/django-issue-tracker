@@ -13,8 +13,8 @@
             <p><span class="boldtext">Created By: </span>{{ feature.users }}</p>
             <div class="d-flex flex-wrap">
             {% if feature.users == user %}
-            <a href= "{% url 'edit_feature' feature.id %}" class="btn btn-warning">Edit Issue</a>
-            <a href= "{% url 'delete_feature' feature.id %}" class= "btn btn-danger">Issue Resolved</a>
+            <a href= "{% url 'edit_feature' feature.id %}" class="btn btn-warning">Edit Feature</a>
+            <a href= "{% url 'delete_feature' feature.id %}" class= "btn btn-danger">Feature Created</a>
             {% endif %}
             {% if user.is_authenticated %}
             <a href= "{% url 'feature_like' feature.id  %}" class = "btn btn-success">I Would Like This Feature: {{feature.likes}}</a>
