@@ -28,4 +28,11 @@ def stats(request):
     c_chart.add("In Testing", Features.objects.filter(development_status="In Testing",tag="Feature Request").count())
     chart3 = c_chart.render_data_uri()
     
-    return render(request, 'development_status_stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3})
+    d_chart = pygal.Pie()
+    d_chart.title = "Total Number Of Bug Reports And Feature Requests"
+    d_chart.add("Bug Reports", Bugs.objects.filter(tag="Bug").count())
+    d_chart.add("Feature Requests", Features.objects.filter(tag="Feature Request").count())
+    
+    chart4 = d_chart.render_data_uri()
+    
+    return render(request, 'development_status_stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4})
