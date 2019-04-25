@@ -11,6 +11,21 @@ from comments.forms import NewCommentForm
 
 def post_list(request):
     posts = Posts.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+    query = request.GET.get("q")
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query)|
+            Q(text__icontains=query)
+            ).distinct()
+    paginator = Paginator(posts, 10)
+
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     return render(request, 'postlist.html', {"posts" : posts})
 
 def post_detail(request, pk):
