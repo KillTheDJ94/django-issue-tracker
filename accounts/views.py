@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import auth, messages
 from accounts.forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from bugs.models import Bugs
+from features.models import Features
+from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 def index(request):
@@ -62,3 +67,51 @@ def registration(request):
         registration_form = UserRegistrationForm()
     return render(request, 'index.html', {
         "registration_form": registration_form})
+        
+def user_bug_profile(request):
+    """The user's profile page"""
+    user = User.objects.get(email=request.user.email)
+    bugs = Bugs.objects.filter(users = user).order_by('-published_date')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+   
+    paginator = Paginator(bugs, 10)
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
+    return render(request, 'bugprofile.html', {"user": user, "bugs": bugs})
+    
+def user_feature_profile(request):
+    user = User.objects.get(email=request.user.email)
+    features = Features.objects.filter(users = user).order_by('-published_date')
+    paginator = Paginator(features, 10)
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        features = paginator.page(1)
+    except EmptyPage:
+        features = paginator.page(paginator.num_pages)
+    return render(request, 'featureprofile.html', {"user": user, "features": features})
