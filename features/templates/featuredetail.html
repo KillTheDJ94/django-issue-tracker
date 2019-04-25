@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="container">
+    <div class = "row issue-detail-text">
+        <div class= "col-sm-10 col-md-9">
+            <h3 class="d-flex justify-content-center">{{ feature.title }}</h3>
+            <p>{{ feature.issue_details}}</p>
+            <p><span class="boldtext">Created on: </span>{{ feature.published_date }}</p>
+            <p><span class="boldtext">Type of issue: </span>{{ feature.tag }}</p>
+            <p><span class="boldtext">Priority: </span>{{ feature.priority }}</p>
+            <p><span class="boldtext">Created By: </span>{{ feature.users }}</p>
+            <div class="d-flex flex-wrap">
+            {% if feature.users == user %}
+            <a href= "{% url 'edit_feature' feature.id %}" class="btn btn-warning">Edit Issue</a>
+            <a href= "{% url 'delete_feature' feature.id %}" class= "btn btn-danger">Issue Resolved</a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

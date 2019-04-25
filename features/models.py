@@ -1,5 +1,6 @@
 from django.db import models
 from django_issue_tracker import settings
+from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 import datetime
@@ -11,6 +12,14 @@ priority_choices = [
         ('Urgent', 'Urgent')
         ]
         
+status_choices = [
+        ('None', ' None'),
+        ('Seen', 'Seen'),
+        ('In Development', 'In Development'),
+        ('Testing Fix', 'Testing Fix'),
+        ('Resolved', 'Resolved')
+        ]
+        
 development_status = [
         ('To Do', 'To Do'),
         ('Currently Being Investigated', 'Currently Being Investigated'),
@@ -19,25 +28,27 @@ development_status = [
         ('Issue Resolved', 'Issue Resolved')
         ]
         
-bug_tag = [
-        ('Bug', 'Bug'),
+feature_tag = [
+        ('Feature Request', 'Feature Request'),
         ]
 
 
-class Bugs(models.Model):
+class Features(models.Model):
     
     """
-    A single Bug
+    A single Feature Request
     """
     
     title = models.CharField(max_length = 200)
-    bug_details = models.TextField()
+    feature_details = models.TextField()
     published_date = models.DateField(("Date"), default=datetime.date.today)
-    tag = models.CharField(max_length=30, choices=bug_tag, default='Bug')
+    tag = models.CharField(max_length=30, choices=feature_tag, default='Feature Request')
     priority = models.CharField(max_length=6, choices=priority_choices, default='Low')
-    users = models.ForeignKey(User, blank=True, null=True, default='User')
+    users = models.ForeignKey(User, blank=True, null=True, default=User)
     development_status = models.CharField(max_length=50, choices=development_status, default='To Do')
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     def __str__(self):
-        return 'Bug: ' + self.title
+        return 'Issue: ' + self.title
+        
+

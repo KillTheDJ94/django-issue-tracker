@@ -2,9 +2,9 @@
 
 {% load staticfiles %}
 
-{% block page_title %} Current Issues {% endblock %}
+{% block page_title %} Current Bugs {% endblock %}
 
-{% block page_heading %} Current Issues {% endblock %}
+{% block page_heading %} Current Bugs {% endblock %}
 
 {% block content %}
 <form class="form-inline my-2 my-lg-0">
@@ -27,18 +27,18 @@
        
         <tbody>
             <tr>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.id}}</a></td>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.published_date}}</a></td>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.title}}</a></td>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.tag}}</a></td>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.priority}}</a></td>
-                <td><a href= "{% url 'bug_detail' issue.id %}">{{bug.development_status}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.id}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.published_date}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.title}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.tag}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.priority}}</a></td>
+                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.development_status}}</a></td>
             </tr>
         </tbody>
     {% endfor %}
     </table>
     {% if user.is_authenticated%}
-    <a id="issue-button" class="btn btn-danger " href="{% url 'new_issue' %}">New Bug Report</a>
+    <a id="bugs-button" class="btn btn-danger " href="{% url 'new_bug' %}">New Bug Report</a>
     {% else %}
     <h5 class="bug-form">Please <a href="{% url 'login' %}">Login</a> so that you can add a new bug report</h5>
     {% endif %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+    <h1 class="text-center bug-form">New Feature Request</h1>
+    <div class ="container">
+        <div class="flex-row">
+            <div class="d-flex justify-content-center">
+                <form class="bug-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | as_bootstrap }}
+                    
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="stripeButton"
+            data-key="pk_test_vEyTHzaL0s2FlF9JFFB6iUr0"
+            data-amount="999"
+            data-name="Unicorn Attractor Issue Tracker"
+            data-description="Feature Request Charge"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"
+            data-currency="gbp">
+        </script>
+        <button type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        (document).ready(function($) {
+            $("#save_feature_request").attr('disabled', 'disabled');
+            $("#stripeButton").click(function(){
+             $("#save_feature_request").removeAttr("disabled");
+            });
+        });
+    </script>
+{% endblock %}
