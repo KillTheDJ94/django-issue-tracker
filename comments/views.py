@@ -5,6 +5,7 @@ from bugs.models import Bugs
 from features.models import Features
 from comments.forms import NewCommentForm
 from .models import Comments
+from blog.models import Posts
 
 def new_bug_comment(request, pk):
     if request.method == "POST":
@@ -33,3 +34,17 @@ def new_feature_comment(request, pk):
             comments = Comments.objects.filter(feature = feature)
             return render(request, 'feature_detail.html', {"feature": feature, "comments":comments, "form":form})
     return render(request, 'features.html')
+    
+def new_post_comment(request, pk):
+    if request.method == "POST":
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            add_comment = form.save(commit = False)
+            add_comment.users = request.user
+            add_comment.posts = get_object_or_404(Posts, pk = pk)
+            add_comment.save()
+            messages.success(request, "Your comment has been added.")
+            posts = Posts.objects.get(pk=pk)
+            comments = Comments.objects.filter(posts = posts)
+            return render(request, 'postdetail.html', {"posts": posts, "comments":comments, "form":form})
+    return render(request, 'postlist.html')
