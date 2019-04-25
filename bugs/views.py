@@ -71,3 +71,82 @@ def bug_dislike(request, pk):
     bugs.save()
     messages.success(request, "Thank you for reporting that you do not have this Bugs")
     return render(request, 'bugdetail.html', {'bugs': bugs})
+    
+def bug_status_to_do(request):
+    bugs = Bugs.objects.filter(development_status= 'To Do', tag='Bug')
+    paginator = Paginator(bugs, 10)
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
+    return render(request, "bug_status_to_do.html", {'bugs': bugs})
+    
+def bug_status_investigated(request):
+    bugs = Bugs.objects.filter(development_status= 'Currently Being Investigated', tag='Bug')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(bugs, 10)
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
+    return render(request, "bug_status_investigated.html", {'bugs': bugs})
+    
+def bug_status_in_development(request):
+    bugs = Bugs.objects.filter(development_status= 'In Development', tag='Bug')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(bugs, 10) 
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
+    return render(request, "bug_status_in_development.html", {'bugs': bugs})  
+    
+def bug_status_in_testing(request):
+    bugs = Bugs.objects.filter(development_status= 'In Testing', tag='Bug')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(bugs, 10)
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
+    return render(request, "bug_status_in_testing.html", {'bugs': bugs})

@@ -12,6 +12,7 @@
         <nav class="navbar navbar-expand navbar-dark mr-auto">
             <ul class= "nav navbar-nav">
                 <div class="navbar  navbar-fixed-top ">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
                     {% if user.is_authenticated%}
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
