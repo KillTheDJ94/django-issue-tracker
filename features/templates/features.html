@@ -44,6 +44,20 @@
     {% else %}
     <h5 class="bug-form">Please <a href="{% url 'login' %}">Login</a> so that you can add a new bug report</h5>
     {% endif %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if features.has_previous %}
+            <a class="btn btn-outline-danger" href="?page={{ features.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ features.number }} of {{ features.paginator.num_pages }}.
+        </span>
+
+        {% if features.has_next %}
+            <a class="btn btn-outline-primary" href="?page={{ features.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
 </div>
 </div>
 {% endblock %}

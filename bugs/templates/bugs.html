@@ -42,6 +42,20 @@
     {% else %}
     <h5 class="bug-form">Please <a href="{% url 'login' %}">Login</a> so that you can add a new bug report</h5>
     {% endif %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if bugs.has_previous %}
+            <a class="btn btn-outline-danger" href="?page={{ bugs.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ bugs.number }} of {{ bugs.paginator.num_pages }}.
+        </span>
+
+        {% if bugs.has_next %}
+            <a class="btn btn-outline-primary" href="?page={{ bugs.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
 </div>
 </div>
 {% endblock %}

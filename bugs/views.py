@@ -3,6 +3,7 @@ from .models import Bugs
 from .forms import BugReportForm
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def bugs(request):
     """ create a view for list of Bugs prior to now
@@ -18,6 +19,15 @@ def bugs(request):
             Q(development_status__icontains=query)|
             Q(id__icontains=query)
             ).distinct()
+    paginator = Paginator(bugs, 10)
+
+    page = request.GET.get('page')
+    try:
+        bugs = paginator.page(page)
+    except PageNotAnInteger:
+        bugs = paginator.page(1)
+    except EmptyPage:
+        bugs = paginator.page(paginator.num_pages)
     return render(request, "bugs.html", {'bugs': bugs})
 
 def bug_detail(request, pk):

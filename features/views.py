@@ -4,6 +4,7 @@ from django.utils import timezone
 from .forms import FeaturePostForm
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def features(request):
     features = Features.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -16,6 +17,16 @@ def features(request):
             Q(development_status__icontains=query)|
             Q(id__icontains=query)
             ).distinct()
+    paginator = Paginator(features, 10) 
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        features = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        features = paginator.page(paginator.num_pages)
     return render(request, "features.html", {'features': features})
 
 def feature_detail(request, pk):
