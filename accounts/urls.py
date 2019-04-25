@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^login/', login, name="login"),
     url(r'^register/', registration, name="registration"),
     url(r'^password-reset/', include(urls_reset)),
-    
     ]

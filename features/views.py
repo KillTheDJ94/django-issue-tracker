@@ -3,9 +3,19 @@ from .models import Features
 from django.utils import timezone
 from .forms import FeaturePostForm
 from django.contrib import messages
+from django.db.models import Q
 
 def features(request):
     features = Features.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
     return render(request, "features.html", {'features': features})
 
 def feature_detail(request, pk):

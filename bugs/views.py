@@ -2,12 +2,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Bugs
 from .forms import BugReportForm
 from django.contrib import messages
+from django.db.models import Q
 
 def bugs(request):
     """ create a view for list of Bugs prior to now
     and render to bugs.html
     """
     bugs = Bugs.objects.filter(tag='Bug').order_by('-published_date')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
     return render(request, "bugs.html", {'bugs': bugs})
 
 def bug_detail(request, pk):
