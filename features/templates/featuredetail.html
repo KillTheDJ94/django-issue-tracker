@@ -16,6 +16,10 @@
             <a href= "{% url 'edit_feature' feature.id %}" class="btn btn-warning">Edit Issue</a>
             <a href= "{% url 'delete_feature' feature.id %}" class= "btn btn-danger">Issue Resolved</a>
             {% endif %}
+            {% if user.is_authenticated %}
+            <a href= "{% url 'feature_like' feature.id  %}" class = "btn btn-success">I Would Like This Feature: {{feature.likes}}</a>
+            <a href= "{% url 'feature_dislike' feature.id  %}" class = "btn btn-secondary">I Would Not Like To Have This Feature: {{feature.dislikes}}</a>
+            {% endif %}
             </div>
         </div>
     </div>

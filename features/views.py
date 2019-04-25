@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Features
 from django.utils import timezone
 from .forms import FeaturePostForm
+from django.contrib import messages
 
 def features(request):
     features = Features.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -32,3 +33,17 @@ def create_or_edit_feature(request, pk=None):
         form = FeaturePostForm(instance=features)
 
     return render(request, 'featuresform.html', {'form': form})
+    
+def feature_like(request, pk):
+    feature = Features.objects.get(pk=pk)
+    feature.likes += 1
+    feature.save()
+    messages.success(request, "Thank you for liking this feature request.")
+    return render(request, 'feature_detail.html', {'feature': feature})
+    
+def feature_dislike(request, pk):
+    feature = Features.objects.get(pk=pk)
+    feature.dislikes += 1
+    feature.save()
+    messages.success(request, "Thank you for reporting that you do not have this feature")
+    return render(request, 'featuredetail.html', {'feature': feature})
