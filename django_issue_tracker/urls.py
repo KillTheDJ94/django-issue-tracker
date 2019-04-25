@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', index, name="index"),
     url(r'^features/', include('features.urls')),
     url(r'^bugs/', include('bugs.urls')),
-    url(r'^blog/', include('blog.urls'))
+    url(r'^blog/', include('blog.urls')),
+    url(r'^stats/', include('stats.urls'))
 ]
