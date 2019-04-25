@@ -20,4 +20,12 @@ def stats(request):
     b_chart.add("In Testing", Bugs.objects.filter(development_status="In Testing", tag="Bug").count())
     chart2 = b_chart.render_data_uri()
     
-    return render(request, 'development_status_stats.html', {'chart1': chart1, 'chart2': chart2})
+    c_chart = pygal.Bar()
+    c_chart.title = "Feature Reports"
+    c_chart.add("To Do", Features.objects.filter(development_status="To Do", tag="Feature Request").count())
+    c_chart.add("Currently Being Investigated", Features.objects.filter(development_status="Currently Being Investigated", tag="Feature Request").count())
+    c_chart.add("In Development", Features.objects.filter(development_status="In Development", tag="Feature Request").count())
+    c_chart.add("In Testing", Features.objects.filter(development_status="In Testing",tag="Feature Request").count())
+    chart3 = c_chart.render_data_uri()
+    
+    return render(request, 'development_status_stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3})
