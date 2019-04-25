@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^investigated/$', bug_status_investigated, name='bug_status_investigated'),
     url(r'^in_development/$', bug_status_in_development, name='bug_status_in_development'),
     url(r'^in_testing/$', bug_status_in_testing, name='bug_status_in_testing'),
+    url(r'^(?P<pk>\d+)/delete/$', delete_issue, name="delete_issue"),
     ]

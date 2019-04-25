@@ -150,3 +150,11 @@ def bug_status_in_testing(request):
     except EmptyPage:
         bugs = paginator.page(paginator.num_pages)
     return render(request, "bug_status_in_testing.html", {'bugs': bugs})
+    
+def delete_bug(request, pk):
+    """
+    Once an bug has been resolved it will be remove
+    """
+    bugs = Bugs.objects.get(pk=pk)
+    bugs.delete()
+    return render(request, redirect('bugs.html'), {'bugs': bugs})
