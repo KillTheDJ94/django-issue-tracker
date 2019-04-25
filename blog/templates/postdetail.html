@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="container">
+    <div class = "row issue-detail-text">
+        <div class= "col-sm-10 col-md-9">
+            <h3 class="d-flex justify-content-center">{{ posts.title }}</h3>
+            <p>{{ posts.text}}</p>
+            <p><span class="boldtext">Created on: </span>{{ posts.created_date }}</p>
+            {% if user.is_authenticated %}
+            <a href= "{% url 'post_like' posts.id  %}" class = "btn btn-success">Like: {{posts.likes}}</a>
+            <a href= "{% url 'post_dislike' posts.id  %}" class = "btn btn-secondary">Dislike: {{posts.dislikes}}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

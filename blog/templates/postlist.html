@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Blog {% endblock %}
+
+{% block page_heading %} Blog {% endblock %}
+
+{% block content %}
+<form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+      <h3 class="bug-form">Welcome to our Blog Page</h3>
+   </div>
+    {% for post in posts %}
+    
+    <div class = "row issue-detail-text blog-box">
+        <div class= "col-sm-10 col-md-9 ">
+            <a class="bug-form blog-title"href = "{% url 'post_detail' post.id %}">
+            <h3 class="d-flex ">{{ post.title }}</h3>
+            </a>
+            <a class="bug-form"href = "{% url 'post_detail' post.id %}">
+            <p><i class="boldtext">Created on: {{ post.created_date }}</i></p>
+            </a>
+            <p><span class="boldtext">{{post.text|truncatechars:100}}</span></p>
+            <p><span class="boldtext"><a class="bug-form"href = "{% url 'post_detail' post.id %}">View Post</a></span></p>
+    </div>
+</div>
+    {% endfor %}
+    
+    {% if user.is_superuser%}
+    <a id="issue-button" class="btn btn-success" href="{% url 'new_post' %}">New Blog Post</a>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
