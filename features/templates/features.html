@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Current Features {% endblock %}
+
+{% block page_heading %} Current Features {% endblock %}
+
+{% block content %}
+<form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>    
+    <table class="table table-hover table-dark">
+    <thead>
+            <tr>
+              <th>Feature ID</th>
+              <th>Feature Date</th>
+              <th>Feature Title</th>
+              <th>Feature Type</th>
+              <th>Priority</th>
+              <th>Development Status</th>
+            </tr>
+        </thead>
+    {% for feature in features %}
+    
+       
+        <tbody>
+            <tr>
+                 
+                <td><a class="bug-form" href= "{% url 'feature_detail' feature.id %}">{{feature.id}}</a></td>
+                <td><a class="bug-form"href= "{% url 'feature_detail' feature.id %}">{{feature.published_date}}</a></td>
+                <td><a class="bug-form"href= "{% url 'feature_detail' feature.id %}">{{feature.title}}</a></td>
+                <td><a class="bug-form"href= "{% url 'feature_detail' feature.id %}">{{feature.tag}}</a></td>
+                <td><a class="bug-form"href= "{% url 'feature_detail' feature.id %}">{{feature.priority}}</a></td>
+                <td><a class="bug-form"href= "{% url 'feature_detail' feature.id %}">{{feature.development_status}}</a></td>
+                
+            </tr>
+            
+        </tbody>
+    {% endfor %}
+    
+    </table>
+    {% if user.is_authenticated%}
+    <a id="issue-button" class="btn btn-success" href="{% url 'new_feature' %}">New Feature Request</a>
+    {% else %}
+    <h5 class="bug-form">Please <a href="{% url 'login' %}">Login</a> so that you can add a new bug report</h5>
+    {% endif %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if features.has_previous %}
+            <a class="btn btn-outline-danger" href="?page={{ features.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ features.number }} of {{ features.paginator.num_pages }}.
+        </span>
+
+        {% if features.has_next %}
+            <a class="btn btn-outline-primary" href="?page={{ features.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+{% endblock %}

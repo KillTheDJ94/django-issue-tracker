@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+{% block page_title %} Login Page {% endblock %}
+
+{% block page_heading %} User Login {% endblock %}
+
+{% block content %}
+<div class="flex-row">
+    <div class="container title-container">
+      <div class="d-flex justify-content-center">
+        <div class="jumbotron">
+        <div class="title">
+          <h1>Enter Your Details Below To Enter <span class="bold">Unicorn Attractor's</span> Issue Tracker.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="d-flex justify-content-center">
+        <form class="login-form" method="POST">
+        {% csrf_token %}
+        {{ login_form | as_bootstrap }}
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p><a href="{% url 'password_reset' %}">Reset your password</a></p>
+    </form>
+    
+    </div>
+    </div>
+{% endblock %}

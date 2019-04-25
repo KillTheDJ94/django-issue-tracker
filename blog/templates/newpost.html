@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+    <h1 class="text-center bug-form">New Blog Post</h1>
+    <div class ="container">
+        <div class="flex-row">
+            <div class="d-flex justify-content-center">
+                <form class="bug-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | as_bootstrap }}
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

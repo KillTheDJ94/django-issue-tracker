@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_title %} Home Page {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+{% else %}
+<div class="alert alert-info alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <p>Please <a href="{% url 'login' %}">Login</a> or <a href="{% url 'registration' %}">Register</a></p>
+{% endif %}
+</div>
+  <div class="banner">
+    <div class="container title-container">
+      <div class="d-flex justify-content-center">
+        <div class="jumbotron">
+        <div class="title">
+          <h1>Welcome To <span class="bold">Unicorn Attractor's</span> Issue Tracker.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="subtitle-bg">
+    <div class="container subtitle-container">
+      <div class="d-flex justify-content-center">
+        <div class="text-center subtitle-title">
+          <h1>Our Service</h1>
+          <p>We are dedicated to resolving your issues <br>no matter how big or small.</p>
+          <a href="{% url 'bugs'%}"><div class="btn btn-primary">Open Bugs: {{bug_count}}</div></a>
+          <a href="{% url 'features' %}"><div class="btn btn-primary">Feature Requests: {{feature_count}}</div></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>Bugs</h3>
+            <p> Simple bug reporting system that allows our developers to effectively understand any, and all issues. </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>Features</h3>
+            <p> You will be able to request your features and directly contribute towards getting them developed with a simple £9.99 payment, for a limited time only. </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>Community</h3>
+            <p> See issues others have reported, and hear directly from us through regualr blog posts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subtitle-bg">
+  <div class="container subtitle-container">
+    <div class="row">
+      <div class="d-flex justify-content-center">
+        <div class="text-center subtitle-title">
+        <h3>Why pay for features?</h3>
+          <p>Our App helps you to gather the information you need to secure conatcs to help your business grow. Using out issue tracker you can make sure we keep on top of this, by adding in as many new features and fixing all of the bugs you experience. With a simple payment you can grow our features to keep growing the ability to stay on top of all of your contacts.</p>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>Comments</h3>
+            <p> Easy commenting will let you see what others have experienced and help you resolve issues that may have already been resolved.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>User Profiles</h3>
+            <p> Keep on top of all of your reported issues and Feature requests and get updates on their progress. </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <div>
+            <h3>Contact with us</h3>
+            <p> Let us know about issues you are experiencing so we can prioritise the issues to work on and the features to develop. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

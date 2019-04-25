@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="container">
+    <div class = "row issue-detail-text">
+        <div class= "col-sm-10 col-md-9">
+            <h3 class="d-flex justify-content-center">{{ feature.title }}</h3>
+            <p>{{ feature.issue_details}}</p>
+            <p><span class="boldtext">Created on: </span>{{ feature.published_date }}</p>
+            <p><span class="boldtext">Type of issue: </span>{{ feature.tag }}</p>
+            <p><span class="boldtext">Priority: </span>{{ feature.priority }}</p>
+            <p><span class="boldtext">Created By: </span>{{ feature.users }}</p>
+            <div class="d-flex flex-wrap">
+            {% if feature.users == user %}
+            <a href= "{% url 'edit_feature' feature.id %}" class="btn btn-warning">Edit Feature</a>
+            <a href= "{% url 'delete_feature' feature.id %}" class= "btn btn-danger">Feature Created</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <a href= "{% url 'feature_like' feature.id  %}" class = "btn btn-success">I Would Like This Feature: {{feature.likes}}</a>
+            <a href= "{% url 'feature_dislike' feature.id  %}" class = "btn btn-secondary">I Would Not Like To Have This Feature: {{feature.dislikes}}</a>
+            {% endif %}
+            <div class= "col-sm-10 col-md-9">
+            <h4><span class="boldtext">Comments</span></h4>
+            {% if user.is_authenticated %}
+                <form action="{% url 'new_feature_comment' feature.id %}" method="POST">
+                    {{ form | as_bootstrap }}
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit" > Submit</button>
+                </form>
+            {% else %}
+            <p>Please <a href="{% url 'login' %}">Login</a> or <a href="{% url 'registration' %}">Register</a> to leave a comment, or Like any issues you have been experiencing</p>
+            {% endif %}
+            {% for comments in comments %}
+                <div class="flex-row">
+                    <div class="comments-list">
+                   <div class="comments-text"> {{comments.text}} </div>
+                   <div class="comments-info"> {{comments.users}} - {{comments.created_date}}</div>
+                   </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
