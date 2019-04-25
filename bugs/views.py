@@ -4,6 +4,8 @@ from .forms import BugReportForm
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from comments.forms import NewCommentForm
+from comments.models import Comments
 
 def bugs(request):
     """ create a view for list of Bugs prior to now
@@ -37,8 +39,9 @@ def bug_detail(request, pk):
     """
     bugs = get_object_or_404(Bugs, pk=pk)
     bugs.save()
-    
-    return render(request, 'bugdetail.html', {'bugs': bugs})
+    comments = Comments.objects.filter(bugs = bugs).order_by('-created_date')
+    form = NewCommentForm(None)
+    return render(request, 'bugdetail.html', {'bugs': bugs, 'comments': comments, 'form': form})
     
 def create_or_edit_bug(request, pk=None):
     """
@@ -63,14 +66,18 @@ def bug_like(request, pk):
     bugs.likes += 1
     bugs.save()
     messages.success(request, "Thank you for reporting that you have this Bugs.")
-    return render(request, 'bugdetail.html', {'bugs': bugs})
+    comments = Comments.objects.filter(bugs = bugs)
+    form = NewCommentForm(None)
+    return render(request, 'bugdetail.html', {'bugs': bugs, 'comments': comments, 'form': form})
     
 def bug_dislike(request, pk):
     bugs = Bugs.objects.get(pk=pk)
     bugs.dislikes += 1
     bugs.save()
     messages.success(request, "Thank you for reporting that you do not have this Bugs")
-    return render(request, 'bugdetail.html', {'bugs': bugs})
+    comments = Comments.objects.filter(bugs = bugs)
+    form = NewCommentForm(None)
+    return render(request, 'bugdetail.html', {'bugs': bugs, 'comments': comments, 'form': form})
     
 def bug_status_to_do(request):
     bugs = Bugs.objects.filter(development_status= 'To Do', tag='Bug')
