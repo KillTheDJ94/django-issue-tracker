@@ -68,3 +68,98 @@ def feature_dislike(request, pk):
     feature.save()
     messages.success(request, "Thank you for reporting that you do not have this feature")
     return render(request, 'featuredetail.html', {'feature': feature})
+    
+def feature_request_to_do(request):
+    features = Features.objects.filter(development_status= 'To Do', tag='Feature Request')
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(features, 10) # Show 210 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        features = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        features = paginator.page(paginator.num_pages)
+    return render(request, "feature_request_to_do.html", {'features': features})
+    
+def feature_request_investigated(request):
+    features = Features.objects.filter(development_status= 'Currently Being Investigated', tag='Feature Request')
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(features, 10) # Show 210 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        features = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        features = paginator.page(paginator.num_pages)
+    return render(request, "feature_request_investigated.html", {'features': features})
+    
+def feature_request_in_development(request):
+    features = Features.objects.filter(development_status= 'In Development', tag='Feature Request')
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(features, 10) # Show 210 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        features = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        features = paginator.page(paginator.num_pages)
+    return render(request, "feature_request_in_development.html", {'features': features})  
+    
+def feature_request_in_testing(request):
+    features = Features.objects.filter(development_status= 'In Testing', tag='Feature Request')
+    query = request.GET.get("q")
+    if query:
+        features = features.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
+    paginator = Paginator(features, 10) # Show 210 contacts per page
+    page = request.GET.get('page')
+    try:
+        features = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        features = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        features = paginator.page(paginator.num_pages)
+    return render(request, "feature_request_in_testing.html", {'features': features})
