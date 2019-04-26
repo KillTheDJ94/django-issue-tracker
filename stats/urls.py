@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from stats.views import stats
+from stats.views import all_charts
 
 urlpatterns =[
-    url(r'^$', stats, name='stats'),
+    url(r'^$', all_charts, name='all_charts'),
     ]

@@ -2,6 +2,7 @@ from django.db import models
 from bugs.models import Bugs
 from features.models import Features
 from django.contrib.auth.models import User
+from blog.models import Posts
 
 class Comments(models.Model):
     users = models.ForeignKey(User, null=True, blank=True, default=User)

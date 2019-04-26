@@ -81,6 +81,15 @@ def bug_dislike(request, pk):
     
 def bug_status_to_do(request):
     bugs = Bugs.objects.filter(development_status= 'To Do', tag='Bug')
+    query = request.GET.get("q")
+    if query:
+        bugs = bugs.filter(
+            Q(title__icontains=query)|
+            Q(tag__icontains=query)|
+            Q(priority__icontains=query)|
+            Q(development_status__icontains=query)|
+            Q(id__icontains=query)
+            ).distinct()
     paginator = Paginator(bugs, 10)
 
     page = request.GET.get('page')

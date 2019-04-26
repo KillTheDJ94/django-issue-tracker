@@ -22,17 +22,17 @@
               <th>Development Status</th>
             </tr>
         </thead>
-    {% for bug in bugs %}
+    {% for bugs in bugs %}
     
        
         <tbody>
             <tr>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.id}}</a></td>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.published_date}}</a></td>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.title}}</a></td>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.tag}}</a></td>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.priority}}</a></td>
-                <td><a href= "{% url 'bug_detail' bugs.id %}">{{bug.development_status}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.id}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.published_date}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.title}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.tag}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.priority}}</a></td>
+                <td><a class="bug-form" href= "{% url 'bug_detail' bugs.id %}">{{bugs.development_status}}</a></td>
             </tr>
         </tbody>
     {% endfor %}

@@ -1,17 +1,19 @@
-from django.shortcuts import render, HttpResponse
 import pygal
 from bugs.models import Bugs
-from features.models import Features
+from django.shortcuts import render, HttpResponse
 from django.utils import timezone
 import datetime
 from datetime import timedelta
+import json
+from features.models import Features
 from pygal.style import DefaultStyle
 
-def stats(request):
+
+def all_charts(request):
     a_chart = pygal.Pie(print_values=True, style=DefaultStyle(
                   value_font_family='helvetica',
                   value_font_size=30))
-    a_chart.title = "All Bug Reports"
+    a_chart.title = "All Issue Reports"
     a_chart.add("To Do", Bugs.objects.filter(development_status="To Do").count() + Features.objects.filter(development_status="To Do").count())
     a_chart.add("Currently Being Investigated", Bugs.objects.filter(development_status="Currently Being Investigated").count() + Features.objects.filter(development_status="Currently Being Investigated").count())
     a_chart.add("In Development", Bugs.objects.filter(development_status="In Development").count() + Features.objects.filter(development_status="In Development").count())
@@ -44,6 +46,7 @@ def stats(request):
     d_chart.title = "Total Number Of Bug Reports And Feature Requests"
     d_chart.add("Bug Reports", Bugs.objects.filter(tag="Bug").count())
     d_chart.add("Feature Requests", Features.objects.filter(tag="Feature Request").count())
+    
     chart4 = d_chart.render_data_uri()
     
     e_chart = pygal.HorizontalBar(print_values=True, style=DefaultStyle(
@@ -102,5 +105,5 @@ def stats(request):
     h_chart.add("7 days", Features.objects.filter(tag="Feature Request", development_status="Currently Being Investigated", published_date=timezone.now().date() - timedelta(days=7)).count())
     chart8 = h_chart.render_data_uri()
     
+    return render(request, 'charts.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4, 'chart5': chart5, 'chart6': chart6, 'chart7': chart7, 'chart8': chart8})
     
-    return render(request, 'stats.html', {'chart1': chart1, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4, 'chart5': chart5, 'chart6': chart6, 'chart7': chart7, 'chart8': chart8})

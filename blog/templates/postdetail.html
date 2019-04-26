@@ -9,30 +9,9 @@
             <p>{{ posts.text}}</p>
             <p><span class="boldtext">Created on: </span>{{ posts.created_date }}</p>
             {% if user.is_authenticated %}
-            <a href= "{% url 'post_like' posts.id  %}" class = "btn btn-success">Like: {{posts.likes}}</a>
+            <a href= "{% url 'post_like' posts.id  %}" class = "btn btn-success">Like: {{posst.likes}}</a>
             <a href= "{% url 'post_dislike' posts.id  %}" class = "btn btn-secondary">Dislike: {{posts.dislikes}}</a>
             {% endif %}
-        </div>
-        <div class= "col-sm-10 col-md-9">
-            <h4><span class="boldtext">Comments</span></h4>
-            {% for comments in comments %}
-                <div class="flex-row">
-                    <div class="comments-list">
-                   <div class="comments-text"> {{comments.text}} </div>
-                   <div class="comments-info"> {{comments.users}} - {{comments.created_date}}</div>
-                   </div>
-                {% endfor %}
-            </div>
-            {% if user.is_authenticated %}
-                <form action="{% url 'new_post_comment' posts.id %}" method="POST">
-                    {{ form | as_bootstrap }}
-                    {% csrf_token %}
-                    <button class="btn btn-primary" type="submit" > Submit</button>
-                </form>
-            {% else %}
-            <p>Please <a href="{% url 'login' %}">Login</a> or <a href="{% url 'registration' %}">Register</a> to leave a comment, or Like any issues you have been experiencing</p>
-            {% endif %}
-            </div>
         </div>
     </div>
 </div>

@@ -30,9 +30,7 @@ def post_list(request):
 
 def post_detail(request, pk):
     posts = get_object_or_404(Posts, pk=pk)
-    comments = Comments.objects.filter(posts = posts).order_by('-created_date')
-    form = NewCommentForm(None)
-    return render(request, 'postdetail.html', {'posts': posts, 'comments': comments, 'form': form})
+    return render(request, 'postdetail.html', {'posts': posts})
     
 def create_or_edit_post(request, pk=None):
     """
@@ -57,15 +55,11 @@ def post_like(request, pk):
     posts.likes += 1
     posts.save()
     messages.success(request, "Thank you for liking this blog post")
-    comments = Comments.objects.filter(posts = posts).order_by('-created_date')
-    form = NewCommentForm(None)
-    return render(request, 'postdetail.html', {'posts': posts, 'comments': comments, 'form': form})
+    return render(request, 'postdetail.html', {'posts': posts})
     
 def post_dislike(request, pk):
     posts = Posts.objects.get(pk=pk)
     posts.dislikes += 1
     posts.save()
     messages.success(request, "Thank you for feedback, please leave a comment so that we can improve")
-    comments = Comments.objects.filter(posts = posts).order_by('-created_date')
-    form = NewCommentForm(None)
-    return render(request, 'postdetail.html', {'posts': posts, 'comments': comments, 'form': form})
+    return render(request, 'postdetail.html', {'posts': posts})

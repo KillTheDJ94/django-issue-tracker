@@ -65,7 +65,7 @@ def registration(request):
                 messages.error(request, "Unable to register your account at this time", extra_tags='alert')
     else:
         registration_form = UserRegistrationForm()
-    return render(request, 'index.html', {
+    return render(request, 'registration.html', {
         "registration_form": registration_form})
         
 def user_bug_profile(request):
