@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+<div class="row">
+   <div class="d-flex justify-content-center">
+      <h3 class="bug-form">Here you can see the current state of all Bugs and Feature requests</h3>
+   </div>
+</div>
+<div class="row">
+   <div id="chart1">
+      <img type="image/svg+xml" src= {{ chart1|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart4">
+      <img type="image/svg+xml" src= {{ chart4|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart2">
+      <img type="image/svg+xml" src= {{ chart2|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart3">
+      <img type="image/svg+xml" src= {{ chart3|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart5">
+      <img type="image/svg+xml" src= {{ chart5|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart6">
+      <img type="image/svg+xml" src= {{ chart6|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart7">
+      <img type="image/svg+xml" src= {{ chart7|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   <div id="chart8">
+      <img type="image/svg+xml" src= {{ chart8|safe }} width=500 viewBox="0 0 600 600"/>
+   </div>
+   </div>
+</div>
+</div>
+{% endblock %}
